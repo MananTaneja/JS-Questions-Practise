@@ -10,6 +10,10 @@ const progressBar = document.querySelector('.complete-line')
 
 let progressScore = 0
 
+function isValidEmail(email) {
+    // Add regex match for email
+}
+
 function calculateScore() {
     let count = 0
 
