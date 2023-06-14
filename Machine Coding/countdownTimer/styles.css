@@ -1,0 +1,48 @@
+* {
+    box-sizing: border-box;
+}
+
+.container {
+    margin: auto;
+    text-align: center;
+}
+
+.countdown-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.countdown-wrapper {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+}
+
+.input-field {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 1rem;
+}
+
+.countdown-controls {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+}
+
+.start-button .reset-button {
+    padding: 1rem 2rem;
+}
+
+input {
+    border: none;
+    height: 4rem;
+    font-size: large;
+    text-align: center;
+    background: none;
+}
+
+input:focus {
+    outline: none;
+}
