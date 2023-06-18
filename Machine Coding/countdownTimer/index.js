@@ -7,19 +7,21 @@ let int
 
 const handleSecondsInputLimit = (seconds, event) => {
     if (seconds >= 60) {
-        event.target.value = seconds % 60
-        minutesInput.value = Number(minutesInput.value) + Math.floor(seconds / 60)
+        event.target.value = formatNumber(seconds % 60)
+        const n = Number(minutesInput.value) + Math.floor(seconds / 60)
+        minutesInput.value = formatNumber(n)
     } else if (seconds === "") {
-        event.target.value = 0
+        event.target.value = "00"
     }
 }
 
 const handleMinutesInputLimit = (minutes, event) => {
     if (minutes >= 60) {
-        event.target.value = minutes % 60
-        hoursInput.value = Number(hoursInput.value) + Math.floor(minutes / 60)
+        event.target.value = formatNumber(minutes % 60)
+        const n = Number(hoursInput.value) + Math.floor(minutes / 60)
+        hoursInput.value = formatNumber(n)
     } else if (minutes === "") {
-        event.target.value = 0
+        event.target.value = "00"
     }
 }
 
@@ -29,6 +31,13 @@ const handleHoursInputLimit = (hours, event) => {
     }
 }
 
+const formatNumber = (number) => {
+    if (number < 10) {
+        return "0" + number
+    } else {
+        return number.toString()
+    }
+}
 
 
 hoursInput.addEventListener("change", (e) => {
@@ -52,16 +61,16 @@ function updateCountdownTimer() {
                 console.log("Timer Done")
                 resetTimer()
             } else {
-                hoursInput.value = hours - 1
+                hoursInput.value = formatNumber(hours - 1)
                 secondsInput.value = 59
                 minutesInput.value = 59
             }
         } else {
-            minutesInput.value = minutes - 1
+            minutesInput.value = formatNumber(minutes - 1)
             secondsInput.value = 59
         }
     } else {
-        secondsInput.value = seconds - 1
+        secondsInput.value = formatNumber(seconds - 1)
     }
 }
 
@@ -87,3 +96,8 @@ startButton.addEventListener("click", () => {
 resetButton.addEventListener("click", () => {
     resetTimer()
 })
+
+
+window.onload = () => {
+    resetTimer()
+}
