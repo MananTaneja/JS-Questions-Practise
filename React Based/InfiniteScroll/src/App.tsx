@@ -1,29 +1,48 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import './App.css'
 import InfiniteScrollable from './InfiniteScrollable'
+
+interface IDoc {
+  title: string,
+  [key: string]: any
+}
 
 function App() {
 
   const [searchQuery, setSearchQuery] = useState<string>("")
-  const [data, setData] = useState<Array<any>>([])
+  const [data, setData] = useState<Array<IDoc[]>>([])
+  const controllerRef = useRef<HTMLDivElement>(null)
 
   // @ts-ignore
-  const getData = useCallback(async (query, pageNumber) => {
-    const dataPromise = await fetch('https://openlibrary.org/search.json' + new URLSearchParams({
-      q: query,
-      page: pageNumber
-    }))
+  const getData = useCallback(async (query: string, pageNumber: number): Promise<void> => {
 
-    const newData = await dataPromise.json()
+    return new Promise(async (resolve, reject) => {
+      try {
 
-    // @ts-ignore
-    setData((prevData) => [...prevData, ...newData.docs])
+        if (controllerRef.current) controllerRef.current.abort()
+
+        const dataPromise = await fetch('https://openlibrary.org/search.json?' + new URLSearchParams({
+          q: query,
+          page: pageNumber.toString()
+        }))
+
+        const data = await dataPromise.json()
+        console.log(data)
+        // @ts-ignore
+        setData((prevData) => [...prevData, ...data.docs])
+        resolve()
+      } catch (err) {
+        reject(err)
+      }
+    })
+
+
   }, [])
 
-  const renderItem = (item: string): JSX.Element => (
-    <div>
+  const renderItem = (item: string, index: number): JSX.Element => (
+    <li key={index}>
       <p>{item}</p>
-    </div>
+    </li>
   )
 
   return (
@@ -31,11 +50,12 @@ function App() {
       <section id='search'>
         <input type="text" placeholder='Search' value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
       </section>
-      <section id="horizontal-scroll"> 
+      <section id="horizontal-scroll">
         <InfiniteScrollable
-          getData={getData}  
+          getData={getData}
           listData={data}
           renderItem={renderItem}
+          searchQuery={searchQuery}
         />
       </section>
     </>
