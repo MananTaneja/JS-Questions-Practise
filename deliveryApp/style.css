@@ -1,0 +1,52 @@
+body,
+* {
+    box-sizing: border-box;
+    font-family: 'Poppins';
+    margin: 0;
+    padding: 0;
+}
+
+#root {
+    padding: 1rem
+}
+
+.card-group {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.card {
+    padding: 1rem;
+    border: 1px solid grey;
+    border-radius: 4px;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.restaurant-search {
+    width: 100%;
+    display: flex;
+    margin: 1rem 0;
+}
+
+.restaurant-search input {
+    width: 80%;
+}
+
+.toolbar {
+    margin: 1rem 0;
+}
+
+.toolbar button {
+    min-width: 10rem;
+    margin-right: 1rem;
+}
+
+.selected {
+    background-color: blue;
+}
