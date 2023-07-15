@@ -1,7 +1,5 @@
 // Implementinmg Function.protoype.bind()
 
-
-
 /* Function.prototype.bind = function (context) {
     const fn = this
     
@@ -20,13 +18,18 @@ function bind(fn, context) {
 
 Function.prototype.bind = function () {
     const fn = this
-
-    // console.log(context, args)
-
     return function () {
-        fn.call(...args)
+        fn.call(fn, arguments)
     }
 }
+// alternate
+// Function.prototype.bind = function () {
+//     const fn = this
+//     return function () {
+//         // console.log(arguments)
+//         fn.apply(fn, [...arguments])
+//     }
+// }
 
 
 const foo = function () {

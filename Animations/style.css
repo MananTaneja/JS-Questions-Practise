@@ -1,0 +1,17 @@
+* {
+    box-sizing: border-box;
+}
+
+#box {
+    position: absolute;
+    height: 200px;
+    width: 200px;
+    background-color: black;
+    border: 2px solid red;
+    transition: transform 800ms ease;
+
+}
+
+#box:hover {
+    transform: scale(1.5);
+}
