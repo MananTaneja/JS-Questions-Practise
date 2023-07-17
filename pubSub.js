@@ -19,7 +19,7 @@ function pubSub() {
 
             // alternate easier to explain
             // unsubscribe() {
-            //     subscribers[eventName] = subscribers[eventName].filter(cb => cb !== callback)
+            // subscribers[eventName] = subscribers[eventName].filter(cb => cb !== callback)
             // }
         }
     }
