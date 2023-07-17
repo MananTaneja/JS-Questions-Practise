@@ -20,16 +20,25 @@ const apiData = [
 function App() {
 
   return (
-    <div className='h-full w-full'>
-      <div className='flex justify-center bg-red'>
+    <div className='h-full w-full flex flex-col items-center'>
+      <div className='w-fit'>
+        <p className='font-bold'>Single Select</p>
         <MultiSelect
           searchAble={true}
           data={apiData}
           type={TSelect.SINGLE}
         />
-
+      </div >
+      <div className="h-10"></div>
+      <div className='w-fit'>
+        <p className='font-bold'>Multi Select</p>
+        <MultiSelect
+          searchAble={true}
+          data={apiData}
+          type={TSelect.MULTI}
+        />
       </div>
-    </div>
+    </div >
   )
 }
 

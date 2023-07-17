@@ -9,7 +9,7 @@ function MultiSelect(props) {
 
     const [queryData, setQueryData] = useState(data)
     const [selectedData, setSelectedData] = useState([])
-    const [display, setDisplay] = useState(true)
+    const [display, setDisplay] = useState(false)
 
     const searchHandler = (searchQuery) => {
         if (!searchQuery && typeof searchQuery !== 'string') return
