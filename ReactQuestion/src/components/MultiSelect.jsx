@@ -12,7 +12,6 @@ function MultiSelect(props) {
     const [display, setDisplay] = useState(true)
 
     const searchHandler = (searchQuery) => {
-        // console.log(searchQuery)
         if (!searchQuery && typeof searchQuery !== 'string') return
         const searchString = searchQuery.toLowerCase()
         const queriedData = data.filter(d => d.toLowerCase().includes(searchString))
@@ -44,7 +43,6 @@ function MultiSelect(props) {
             <ListRenderer
                 data={queryData}
                 typeSelect={type}
-                onCloseHandler={onCloseHandler}
                 selectedData={selectedData}
                 setSelectedData={setSelectedData}
                 display={display}

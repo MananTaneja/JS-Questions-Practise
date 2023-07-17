@@ -1,7 +1,7 @@
 import cx from 'classnames'
 import React from 'react'
 
-function ListRenderer({ data, typeSelect, onCloseHandler, searchQuery, selectedData, setSelectedData, display }) {
+function ListRenderer({ data, typeSelect, selectedData, setSelectedData, display }) {
 
     function rowRenderer(itemData, idx) {
         const isChecked = selectedData.includes(itemData)
@@ -22,24 +22,25 @@ function ListRenderer({ data, typeSelect, onCloseHandler, searchQuery, selectedD
         )
     }
 
-    const handleClick = (e) => {
-        const row = e.target.closest('div.select-item')
+    const handleClick = (event) => {
+        const row = event.target.closest('div.select-item')
         if (row) {
-            if (!selectedData.includes(row.dataset.value)) {
+            const selectedItem = row.dataset.value
+            if (!selectedData.includes(selectedItem)) {
                 if (typeSelect === 'SINGLE') {
-                    setSelectedData([row.dataset.value])
+                    setSelectedData([selectedItem])
                 }
-                else setSelectedData([...selectedData, row.dataset.value])
+                else setSelectedData([...selectedData, selectedItem])
             }
             else {
-                const newSelection = selectedData.filter(d => d !== row.dataset.value)
+                const newSelection = selectedData.filter(item => item !== selectedItem)
                 setSelectedData(newSelection)
             }
         }
     }
 
     return (
-        <div className="select-group" onClick={(e) => handleClick(e)} key='select-group'>
+        <div className="select-group" onClick={(event) => handleClick(event)} key='select-group'>
             {data.map((item, idx) => {
                 return rowRenderer(item, idx)
             })}

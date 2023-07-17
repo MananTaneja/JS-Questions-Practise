@@ -18,9 +18,6 @@ const apiData = [
 ]
 
 function App() {
-  function onClose(selectedOptions) {
-    console.log(selectedOptions)
-  }
 
   return (
     <div className='h-full w-full'>
@@ -28,7 +25,6 @@ function App() {
         <MultiSelect
           searchAble={true}
           data={apiData}
-          onClose={onClose}
           type={TSelect.SINGLE}
         />
 
