@@ -1,0 +1,13 @@
+.modal {
+    display: none;
+    background-color: aliceblue;
+    position: absolute;
+    top: 50%;
+    left: calc(50% - 200px);
+    width: 400px;
+}
+
+.header {
+    display: flex; 
+    justify-content: space-between;
+}
