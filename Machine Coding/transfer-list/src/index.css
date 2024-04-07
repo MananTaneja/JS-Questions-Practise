@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.container {
+    display: grid;
+    background-color: aquamarine;
+    padding: 2rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    width: 100vw;
+    height: 100vh;
+}
+
+.sidebar {
+    background-color: aqua;
+    border: 2px solid black;
+}
+
+.move-button {
+    background-color: beige;
+    border: 2px solid orange;
+    width: 8rem;
+}
+
+.button-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
