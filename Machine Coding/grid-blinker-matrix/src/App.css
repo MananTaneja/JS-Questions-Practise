@@ -1,0 +1,31 @@
+.block {
+    height: 40px;
+    width: 40px;
+    border-width: 1px;
+    border-color: black;
+    border-style: solid;
+    transition: ease-in-out;
+    transition-duration: 200ms;
+}
+
+.selected {
+    background-color: green;
+}
+
+.hidden-block {
+    height: 40px;
+    width: 40px;
+    border-width: 2px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    gap: 8px
+}
+
+.matrix {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
