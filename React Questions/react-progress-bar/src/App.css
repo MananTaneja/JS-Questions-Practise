@@ -5,8 +5,8 @@
 }
 
 .progress-bar {
-  max-width: 800px;
-  border-radius: 8px;
+  max-width: 100%;
+  border-radius: 16px;
   text-align: center;
   color: black;
   height: 30px;
@@ -30,7 +30,7 @@
   left: 50%
 }
 
-.increment-button {
+.button {
   margin: 20px 0px;
   padding: 1rem;
   font-family: 'Work Sans';
