@@ -1,11 +1,11 @@
 function throttle(fn, timeout) {
-    let invoked = false
+    let coolDown = false
     return function (...args) {
-        if (!invoked) {
+        if (!coolDown) {
             fn.apply(this, args)
-            invoked = true
+            coolDown = true
             setTimeout(() => {
-                invoked = false
+                coolDown = false
             }, timeout)
         }
     }
