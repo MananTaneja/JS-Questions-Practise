@@ -16,7 +16,7 @@ function solve(words) {
     let adj = Array(n).fill().map(() => new Set())
     for (let i = 0; i < words.length - 1; i++) {
         const first = words[i].split('')
-        const second = words[i + 1].split(''
+        const second = words[i + 1].split('')
         // console.log(second)
         for (let j = 0; j < first.length && j < second.length; j++) {
             if (first[j] !== second[j]) {
