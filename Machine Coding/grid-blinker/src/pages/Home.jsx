@@ -1,16 +1,14 @@
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useState } from 'react'
 function Home({ rows, cols }) {
-	const [selected, setSelected] = useState([])
-	let deactivatingSequence = useRef(false)
-	let timerId = useRef(0)
+	const [selected, setSelected] = useState(new Set())
+	const [disableClick, setDisableClick] = useState(false)
 
 	function renderBlock(id) {
-		if (selected.indexOf(id) === -1) {
+		if (!selected.has(id.toString())) {
 			return (
 				<div
 					className='h-20 w-20 border-2 border-black'
 					data-id={id.toString()}
-					onClick={() => handleCellClick(id)}
 				>
 					{id}
 				</div>
@@ -27,44 +25,6 @@ function Home({ rows, cols }) {
 		)
 	}
 
-	function handleCellClick(id) {
-		setSelected([...selected, Number(id)])
-	}
-
-	// useEffect(() => {
-	// 	gridContainer.current.addEventListener('click', (e) => {
-	// 		const id = e.target.dataset.id
-	// 		console.log(id)
-	// 		setSelected((prev) => [...prev, Number(id)])
-	// 	})
-	// }, [])
-
-	function deactivateCell() {
-		const t = [...selected]
-		const id = t.pop()
-		timerId.current = setTimeout(() => {
-			console.log('removing', id)
-			setSelected(t)
-		}, 1 * 1000)
-	}
-
-	useEffect(() => {
-		if (selected.length === rows * cols) {
-			console.log('all selected')
-			deactivatingSequence.current = true
-			deactivateCell()
-		} else if (selected.length === 0) {
-			deactivatingSequence.current = false
-		} else {
-			if (deactivatingSequence.current) {
-				deactivateCell()
-			}
-		}
-
-		return () => {
-			if (timerId.current) clearTimeout(timerId.current)
-		}
-	}, [selected])
 
 	function renderRow(cols, rowIndex) {
 		const row = []
@@ -85,23 +45,63 @@ function Home({ rows, cols }) {
 		return grid
 	}
 
+	const handleClick = (event) => {
+		const selectedId = event.target.getAttribute('data-id')
+
+		if (!selectedId) return
+		const currentSelection = selected
+
+		if (selected.has(selectedId)) {
+			currentSelection.delete(selectedId)
+		} else {
+			currentSelection.add(selectedId)
+		}
+
+		setSelected(new Set(currentSelection))
+	}
+
+	const removeLastElement = () => {
+
+	}
+
+	useEffect(() => {
+		let intervalId
+		if (selected.size === rows * cols) {
+			setDisableClick(true)
+			intervalId = setInterval(() => {
+				console.log('setInterval is being executed')
+				if (selected.size >= 0) {
+					setSelected(prev => {
+						const order = Array.from(prev)
+						const elementToRemove = order.pop()
+						console.log('set selected', order, elementToRemove)
+
+						return new Set(order)
+					})
+				} else {
+					clearInterval(intervalId)
+				}
+			}, 1 * 1000)
+		}
+
+		if (selected.size === 0) {
+			setDisableClick(false)
+		}
+
+		return () => {
+			clearInterval(intervalId)
+		}
+
+	}, [selected, setSelected, disableClick, setDisableClick, rows, cols])
+
 	return (
-		<div className='h-screen flex justify-center items-center'>
-			<div className='flex flex-col gap-2 p-4 border-2 border-black border-r-2 w-fit'>
+		<div className='h-screen justify-center items-center'>
+			<div className='flex flex-col gap-2 p-4 border-2 border-black border-r-2 w-fit' onClick={disableClick ? null : handleClick}>
 				{renderGrid(rows, cols)}
 			</div>
+			<div>Selected: {Array.from(selected).toString()}</div>
 		</div>
 	)
 }
 
 export default Home
-
-/* 
-
-Things to do:
-1. Correct the set state array appending - working
-2. Logic to do updates in reverse order
-3. Try to do the alignment via grid instead of flex
-4. Use Memoization hooks - somewhere
-
-*/
