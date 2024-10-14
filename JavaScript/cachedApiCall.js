@@ -23,7 +23,7 @@ const fetchCached = () => {
             console.log('fetching from network', cache[url].ttl)
         }
 
-        return cache[url][0]
+        return cache[url].response
     }
 }
 
