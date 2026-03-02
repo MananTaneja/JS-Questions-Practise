@@ -22,15 +22,15 @@ class TaskScheduler {
     }
 }
 
-const task = () => new Promise((res, rej) => setTimeout(() => res('task'), 4000))
-const task2 = () => new Promise((res, rej) => setTimeout(() => res('task'), 200))
+const task1 = () => new Promise((res, rej) => setTimeout(() => res('task1'), 4000))
+const task2 = () => new Promise((res, rej) => setTimeout(() => res('task2'), 200))
 
 const scheduler = new TaskScheduler(2)
-scheduler.push(task)
+scheduler.push(task1)
 scheduler.push(task2)
 scheduler.push(task2)
 scheduler.push(task2)
-scheduler.push(task)
-scheduler.push(task)
-scheduler.push(task)
-scheduler.push(task)
+scheduler.push(task1)
+scheduler.push(task1)
+scheduler.push(task1)
+scheduler.push(task1)
