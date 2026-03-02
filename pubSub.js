@@ -9,21 +9,17 @@ function pubSub() {
 
     function subscribe(eventName, callback) {
         if (!subscribers.has(eventName)) {
-            subscribers.set(eventName, [])
+            subscribers.set(eventName, new Set())
         }
 
         const callbacks = subscribers.get(eventName)
-        callbacks.push(callback)
-        subscribers.set(eventName, callbacks)
+        callbacks.add(callback)
 
         function unsubscribe() {
             if (!subscribers.has(eventName)) return
             const callbacks = subscribers.get(eventName)
-            const filtered = callbacks.filter((curCallback) => curCallback != callback)
-            if (!filtered.length) { subscribers.delete(eventName) }
-            else {
-                subscribers.set(eventName, filtered)
-            }
+            callbacks.delete(callback)
+            if (callbacks.size == 0) { subscribers.delete(eventName) }
         }
 
         return {
