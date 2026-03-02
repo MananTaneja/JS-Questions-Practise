@@ -44,21 +44,21 @@ function pubSub() {
 }
 
 
-function showMeTheMoney(money) {
-    console.log(money)
+function callback1(data) {
+    console.log('callback1: ', data)
 }
 
-function updateBalance(money) {
-    console.log('balance is:', money)
+function callback2(data) {
+    console.log('callback2: ', data)
 }
 
 const ps = pubSub()
 
-const ub1 = ps.subscribe('show-money', showMeTheMoney)
-const ub2 = ps.subscribe('show-money', updateBalance)
+const ub1 = ps.subscribe('event1', callback1)
+const ub2 = ps.subscribe('event1', callback2)
 
-ps.publish('show-money', 1000)
+ps.publish('event1', 1000)
 
 ub2.unsubscribe()
 
-ps.publish('show-money', 10000)
+ps.publish('event1', 10000)
