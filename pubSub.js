@@ -40,10 +40,12 @@ function pubSub() {
         return ub
     }
 
-    function publish(eventName, args) {
-        if (!subscribers.has(eventName)) return
+    function publish(eventName, ...args) {
         const callbacks = subscribers.get(eventName)
-        callbacks.forEach((callback) => callback(args))
+        if (!callbacks) return;
+
+        // Take a snapshot to handle unsubscriptions during the loop safely
+        [...callbacks].forEach((cb) => cb(...args))
     }
 
     return {
@@ -80,10 +82,10 @@ ps.publish('event1', 10000)
 
 /*
 Follow ups:
-1. subscribeOnce
-2. publish - should take an array of arguments instead of just one
-3. in some cases a subscriber may unsubscribe - while the publish is being executed - how can you handle that
-4. preserving `this`
+1. subscribeOnce - done
+2. publish - should take an array of arguments instead of just one - done
+3. in some cases a subscriber may unsubscribe - while the publish is being executed - how can you handle that - done
+4. preserving `this` - take context when subscribing and inside the publish method use apply to add the context as well
 
 done:
 1. using set - for performance
