@@ -27,6 +27,19 @@ function pubSub() {
         }
     }
 
+    function subscribeOnce(eventName, callback) {
+        let ub
+        const wrappedCallback = (...args) => {
+            callback(...args)
+
+            if (ub) {
+                ub.unsubscribe()
+            }
+        }
+        ub = subscribe(eventName, wrappedCallback)
+        return ub
+    }
+
     function publish(eventName, args) {
         if (!subscribers.has(eventName)) return
         const callbacks = subscribers.get(eventName)
@@ -35,6 +48,7 @@ function pubSub() {
 
     return {
         subscribe,
+        subscribeOnce,
         publish
     }
 }
@@ -48,13 +62,29 @@ function callback2(data) {
     console.log('callback2: ', data)
 }
 
+function callback3(data) {
+    console.log('callback3: ', data)
+}
+
 const ps = pubSub()
 
 const ub1 = ps.subscribe('event1', callback1)
 const ub2 = ps.subscribe('event1', callback2)
+const ub3 = ps.subscribeOnce('event1', callback3)
 
 ps.publish('event1', 1000)
 
 ub2.unsubscribe()
 
 ps.publish('event1', 10000)
+
+/*
+Follow ups:
+1. subscribeOnce
+2. publish - should take an array of arguments instead of just one
+3. in some cases a subscriber may unsubscribe - while the publish is being executed - how can you handle that
+4. preserving `this`
+
+done:
+1. using set - for performance
+*/
