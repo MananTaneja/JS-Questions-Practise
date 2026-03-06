@@ -43,7 +43,6 @@ const promisePool = (tasks, limit) => {
             const currentIndex = index++
             const currentTask = tasks[currentIndex]
 
-
             currentTask().then((res) => {
                 results[currentIndex] = res
                 completedCount++
@@ -55,7 +54,6 @@ const promisePool = (tasks, limit) => {
                     runWorker()
                 }
             }).catch(reject)
-
         }
 
         // initially execute all tasks till we reach the limit
